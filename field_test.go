@@ -83,23 +83,23 @@ func TestUnmarshalField(t *testing.T) {
 		Cell     *xlsx3.Cell
 		Value    any
 		ReadFlag bool
-		Error    string
+		Error    error
 	}
 
 	tests := []*test{
-		{Error: "xlsx2struct: cannot unmarshal cell nil into field nil", Field: nil, Cell: nil},
-		{Field: fields["String"]},
+		{Field: nil, Cell: nil, Error: &UnmarshalFieldError{Cell: nil, Field: nil}},
+		{Field: fields["String"], Cell: nil, Error: &UnmarshalFieldError{Cell: nil, Field: fields["String"]}},
 	}
 
 	for _, test := range tests {
 		v, f, err := unmarshalField(test.Field, test.Cell)
-		if err == nil && test.Error == "" {
+		if test.Error == nil {
 			require.NoError(t, err)
 			require.Equal(t, test.Value, v)
 			require.Equal(t, test.ReadFlag, f)
 		} else {
 			require.Error(t, err)
-			require.EqualError(t, err, test.Error)
+			require.EqualError(t, err, test.Error.Error())
 			require.False(t, f)
 		}
 	}

@@ -118,7 +118,7 @@ func unmarshalField(field *Field, cell *xlsx3.Cell) (a any, ok bool, err error) 
 		a = v
 	case reflect.Struct:
 		switch field.Type {
-		case reflect.TypeOf(time.Time{}):
+		case reflect.TypeOf(time.Time{}): // TODO: re-factor unmarshalTimeField
 			switch cell.Type() {
 			case xlsx3.CellTypeNumeric:
 				if f, err = strconv.ParseFloat(v, 64); err == nil {
@@ -169,6 +169,11 @@ func defaultValue(f *Field) string {
 			v = "0"
 		case reflect.Float32, reflect.Float64:
 			v = "0.0"
+		case reflect.Struct:
+			switch f.Type {
+			case reflect.TypeOf(time.Time{}):
+				v = "0001-01-01"
+			}
 		}
 	}
 
