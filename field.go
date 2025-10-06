@@ -44,6 +44,7 @@ func (f *Field) Describe() string {
 	return s
 }
 
+// unmarshalField reads field value from given cell. Read flag (ok) is false when default value is returned.
 func unmarshalField(field *Field, cell *xlsx3.Cell) (a any, ok bool, err error) {
 	if field == nil || cell == nil {
 		err = &UnmarshalFieldError{Cell: cell, Field: field}
@@ -131,9 +132,11 @@ func unmarshalField(field *Field, cell *xlsx3.Cell) (a any, ok bool, err error) 
 			}
 		default:
 			err = &UnsupportedFieldError{Field: field}
+			return
 		}
 	default:
 		err = &UnsupportedFieldError{Field: field}
+		return
 	}
 
 	if err != nil {

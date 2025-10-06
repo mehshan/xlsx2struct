@@ -1,7 +1,7 @@
 # TODO
 
-- [ ] Test freely available xlsx sheets
-- [ ] Test xlsx files created with different versions Excel (e.g. office 365)
+- [ ] Test freely available xlsx sheets (Add as examples..?)
+- [ ] Test xlsx files created with different versions Excel (e.g. office 365) (Add as examples..?)
 - [ ] Test write xlsx and read it back
 - [ ] Add docs in readme
 - [ ] New xlsx2struct repo, GitHub CI/CD and releases
@@ -10,7 +10,6 @@
 
 ### In Progress
 
-- [ ] Complete all test cases and code coverage
 
 ### Done ✓
 
@@ -20,3 +19,4 @@
 - [x] Field options in tags `column:"heading=Order Date,trim,time=2006-01-01"`
 - [x] Handle empty rows in unmarshalFields
 - [x] Revise reflection code in newStruct
+- [x] Complete all test cases and code coverage

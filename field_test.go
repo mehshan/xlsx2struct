@@ -43,18 +43,10 @@ type supportedTypes struct {
 	Uint16  uint16
 	Uint32  uint32
 	Uint64  uint64
-}
 
-func fields(a any) (map[string]*Field, error) {
-	fs, err := extractFields(reflect.TypeOf(a))
-	if err != nil {
-		return nil, err
-	}
-	m := map[string]*Field{}
-	for _, f := range fs {
-		m[f.Name] = f
-	}
-	return m, nil
+	TrimString string `column:"trim"`
+
+	Unsupported []int
 }
 
 func TestUnmarshalFieldBasicTypes(t *testing.T) {
@@ -87,7 +79,14 @@ func TestUnmarshalField(t *testing.T) {
 	}
 
 	tests := []*test{
+		{Field: fields["Unsupported"], Cell: cell(""), Error: &UnsupportedFieldError{Field: fields["Unsupported"]}},
+		// no trim
+		{Field: fields["String"], Cell: cell(" No Trim "), Value: " No Trim ", ReadFlag: true},
+		// trim
+		{Field: fields["TrimString"], Cell: cell(" Trim "), Value: "Trim", ReadFlag: true},
+		// nil field and cell
 		{Field: nil, Cell: nil, Error: &UnmarshalFieldError{Cell: nil, Field: nil}},
+		// nil cell
 		{Field: fields["String"], Cell: nil, Error: &UnmarshalFieldError{Cell: nil, Field: fields["String"]}},
 	}
 
@@ -103,6 +102,18 @@ func TestUnmarshalField(t *testing.T) {
 			require.False(t, f)
 		}
 	}
+}
+
+func fields(a any) (map[string]*Field, error) {
+	fs, err := extractFields(reflect.TypeOf(a))
+	if err != nil {
+		return nil, err
+	}
+	m := map[string]*Field{}
+	for _, f := range fs {
+		m[f.Name] = f
+	}
+	return m, nil
 }
 
 func cell(v string) *xlsx3.Cell {
