@@ -1,4 +1,4 @@
-// Package xlsx2struct builds on top of github.com/tealeg/xlsx to unmarshal XLSX files into Go structs.
+// Package xlsx2struct builds on top of github.com/tealeg/xlsx to unmarshal XLSX sheets to Go structs.
 package xlsx2struct
 
 import (
@@ -118,7 +118,6 @@ func unmarshalFields(fields map[*Field]*Column, sheet *xlsx3.Sheet, row int) (ma
 
 	return m, allOk, nil
 }
-
 
 func mapStructToSheet(t reflect.Type, sheet *xlsx3.Sheet, row, col int) (map[*Field]*Column, error) {
 	cols, err := extractColumns(sheet, row, col)

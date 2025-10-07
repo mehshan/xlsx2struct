@@ -10,42 +10,38 @@ To import the package, use the line
 
 ## Example
 
-This example uses sample [salesorders.xlsx](testdata/salesorders.xlsx) spreadsheet.
+This example uses sample [salesorders.xlsx](testdata/salesorders.xlsx) spreadsheet. Complete code is available in [examples repo](https://github.com/mehshan/xlsx2struct-examples/tree/main/salesorders).
 
-```
-import (
-    "time"
-
-    github.com/mehshan/xlsx2struct
-)
-
+```go
 type SaleOrder struct {
-    Date   time.Time `column:"heading=Order Date,trim,time=2004-01-01,default=o"`
-}
-
-type SaleOrder struct {
-    Date   time.Time `heading:"Order Date"`
-    Region string    `heading:"Region"`
-    Rep    string    `heading:"Rep"`
-    Item   string    `heading:"Item"`
-    Units  int32     `heading:"Units"`
-    Cost   float32   `heading:"Unit Cost"`
-    Total  float64   `heading:"Total"`
+	Date   time.Time `column:"heading=Order Date"`
+	Region string    `column:"heading=Region,trim"`
+	Rep    string    `column:"heading=Rep"`
+	Item   string    `column:"heading=Item,default=Pencil"`
+	Units  int32     `column:"heading=Units,default=1"`
+	Cost   float32   `column:"heading=Unit Cost"`
+	Total  float64   `column:"heading=Total"`
 }
 
 func main() {
-    opt := DefaultSheetOptions()
+	orders := []*SaleOrder{}
 
-    orders := []*SaleOrder{}
-    err := Unmarshal(sheet, &orders, opt)
+	file, err := xlsx3.OpenFile("testdata/salesorders.xlsx")
+	if err != nil {
+		panic(err)
+	}
 
-    if err != nil {
-        panic(err)
-    }
+	sheet := file.Sheet["Sales Orders"]
+	opt := xlsx2struct.DefaultSheetOptions()
 
-    for _, o := range orders {
-        fmt.Println("%v %s %s %s %d %f %f", o.Date, o.Region, o.Rep, o.Item, o.Units, o.Cost, o.Total)
-    }
+	err = xlsx2struct.Unmarshal(sheet, &orders, opt)
+	if err != nil {
+		panic(err)
+	}
+
+	for _, o := range orders {
+		fmt.Printf("%v %s %s %s %d %f %f\n", o.Date, o.Region, o.Rep, o.Item, o.Units, o.Cost, o.Total)
+	}
 }
 
 ```
