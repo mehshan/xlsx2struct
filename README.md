@@ -1,6 +1,6 @@
-# xlsx
+# xlsx2struct
 
-Go XLSX to struct library
+Go XLSX to struct library.
 
 ## Import the package
 
