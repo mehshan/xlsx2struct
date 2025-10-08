@@ -1,6 +1,6 @@
 # xlsx2struct
 
-Go XLSX to struct library.
+**xlsx2struct** builds on top of [github.com/tealeg/xlsx](github.com/tealeg/xlsx) to unmarshal XLSX sheets to Go structs.
 
 ## Import the package
 

@@ -1,15 +1,12 @@
 # TODO
 
-- [ ] Test freely available xlsx sheets (Add as examples..?)
 - [ ] Test xlsx files created with different versions Excel (e.g. office 365) (Add as examples..?)
-- [ ] Test write xlsx and read it back
-- [ ] Add docs in readme
-- [ ] New xlsx2struct repo, GitHub CI/CD and releases
 - [ ] Complete code documentation
 - [ ] Document and test unsupported features (e.g. nested structures)
 
 ### In Progress
 
+- [ ] GitHub CI/CD and releases
 
 ### Done ✓
 
@@ -20,3 +17,4 @@
 - [x] Handle empty rows in unmarshalFields
 - [x] Revise reflection code in newStruct
 - [x] Complete all test cases and code coverage
+- [x] Add example for a freely available xlsx sheet
