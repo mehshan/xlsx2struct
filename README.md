@@ -1,6 +1,8 @@
 # xlsx2struct
 
-**xlsx2struct** builds on top of [github.com/tealeg/xlsx](github.com/tealeg/xlsx) to unmarshal XLSX sheets to Go structs.
+[[https://github.com/mehshan/xlsx2struct/blob/main/LICENSE][https://img.shields.io/badge/license-bsd-orange.svg]]
+
+**xlsx2struct** builds on top of [github.com/tealeg/xlsx](https://github.com/tealeg/xlsx) to unmarshal XLSX sheets to Go structs.
 
 ## Import the package
 
