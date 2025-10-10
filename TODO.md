@@ -1,12 +1,8 @@
 # TODO
 
-- [ ] Test xlsx files created with different versions Excel (e.g. office 365) (Add as examples..?)
-- [ ] Complete code documentation
 - [ ] Document and test unsupported features (e.g. nested structures)
 
 ### In Progress
-
-- [ ] GitHub CI/CD and releases
 
 ### Done ✓
 
@@ -18,3 +14,5 @@
 - [x] Revise reflection code in newStruct
 - [x] Complete all test cases and code coverage
 - [x] Add example for a freely available xlsx sheet
+- [x] GitHub CI/CD and releases
+- [x] Complete code documentation
