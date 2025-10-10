@@ -8,12 +8,26 @@ import (
 	xlsx3 "github.com/tealeg/xlsx/v3"
 )
 
+// A SheetOptions instance describes the structure of a sheet in an XLSX file.
+//
+// For example:
+//
+//	opts := SheetOptions {
+//		Row:     0,
+//		Col:     0,
+//		DataRow: 1,
+//	}
+//
+// The instance "opts" specifies that the first heading is located at cell "A1",
+// row "2" contains the first row of data, and cell "A2" is the first data cell.
 type SheetOptions struct {
-	Row     int
-	Col     int
-	DataRow int
+	Row     int // row index (zero based) of the first heading
+	Col     int // column index (zero based) of the first heading
+	DataRow int // row index (zero based) of the first row of data
 }
 
+// DefaultSheetOptions returns a SheetOptions instance for most common sheet structure, i.e.,
+// cell "A1" contains the first heading and row "2" contains the first row of data.
 func DefaultSheetOptions() *SheetOptions {
 	return &SheetOptions{
 		Row:     0,
@@ -22,9 +36,24 @@ func DefaultSheetOptions() *SheetOptions {
 	}
 }
 
+// Unmarshal reads the sheet and stores the sheet data
+// in the slice of struct pointed to by a. If a is nil or not a pointer,
+// Unmarshal returns an [InvalidUnmarshalError].
+//
+// Unmarshal can only store sheet data in a struct.
+// Supported field types include: bool, float, int, string and time.Time.
+//
+// Examples of struct field tags and their meanings:
+//
+//	// Field values come from column with heading "Order Date".
+//	Date time.Time `column:"heading=Order Date"`
+//
+//	// Field values have all leading and trailing white space removed.
+//	Region string `column:"heading=Region,trim"`
+//
+//	// Field value defaults to "1" when cell is empty.
+//	Units int32 `column:"heading=Units,default=1"`
 func Unmarshal(sheet *xlsx3.Sheet, a any, opt *SheetOptions) error {
-	// a should be pointer to slice
-
 	v := reflect.ValueOf(a)
 	if v.Kind() != reflect.Pointer || v.IsNil() {
 		return &InvalidUnmarshalError{reflect.TypeOf(a)}
